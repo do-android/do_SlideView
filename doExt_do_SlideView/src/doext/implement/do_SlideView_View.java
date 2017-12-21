@@ -384,7 +384,8 @@ public class do_SlideView_View extends ViewPager implements DoIUIModuleView, do_
 	private class MyPagerAdapter extends PagerAdapter {
 
 		private Map<Integer, View> views = new HashMap<Integer, View>(); // 缓存所有的view
-		private Map<Integer, JSONObject> viewDatas = new HashMap<Integer, JSONObject>(); // 缓存所有view 对应的数据
+		private Map<Integer, JSONObject> viewDatas = new HashMap<Integer, JSONObject>(); // 缓存所有view
+																							// 对应的数据
 		private Map<Integer, String> viewTemplates = new HashMap<Integer, String>();// 缓存所有的模板路径
 		private Map<String, String> itemTemplates = new HashMap<String, String>();
 		private List<String> uiTemplates = new LinkedList<String>();
@@ -402,7 +403,7 @@ public class do_SlideView_View extends ViewPager implements DoIUIModuleView, do_
 //				removeView((View) _view);
 //			}
 //			views.clear();
-			removeAllViews(); //保证viewPager 中的view 都是最新的
+			removeAllViews(); // 保证viewPager 中的view 都是最新的
 			notifyDataSetChanged();
 		}
 
@@ -462,7 +463,8 @@ public class do_SlideView_View extends ViewPager implements DoIUIModuleView, do_
 				if (_templatePath == null) {
 					throw new RuntimeException("绑定一个无效的模版Index值");
 				}
-				if (views.get(_pos) == null) { // 如果为空，则加载对应的ui，对应的ui.js, setDatamodel对应的值
+				if (views.get(_pos) == null) { // 如果为空，则加载对应的ui，对应的ui.js,
+												// setDatamodel对应的值
 					view = getView(_pos, _templatePath, _childData);
 				} else {
 					if (_templatePath.equals(viewTemplates.get(_pos))) {
@@ -472,7 +474,9 @@ public class do_SlideView_View extends ViewPager implements DoIUIModuleView, do_
 							viewDatas.put(_pos, _childData);
 							((DoIUIModuleView) view).getModel().setModelData(_childData);
 						}
-					} else { // 如果与缓存的模板不相等，则把viewmodel dispose掉，完全重新加载对应的ui，对应的ui.js, setDatamodel对应的值
+					} else { // 如果与缓存的模板不相等，则把viewmodel
+								// dispose掉，完全重新加载对应的ui，对应的ui.js,
+								// setDatamodel对应的值
 						// 先dispose对应的module
 						DoIUIModuleView _view = (DoIUIModuleView) views.get(_pos);
 						_view.getModel().dispose();
@@ -506,6 +510,7 @@ public class do_SlideView_View extends ViewPager implements DoIUIModuleView, do_
 			viewDatas.put(_pos, _childData);
 			viewTemplates.put(_pos, _templatePath);
 			_doIUIModuleView.getModel().setModelData(_childData);
+			_doUIContainer.getRootView().didLoadView();
 			return _view;
 		}
 
